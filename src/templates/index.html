@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Precio de Vuelo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            color: #006064;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 15px 0 5px;
+            font-weight: 600;
+        }
+
+        select, input[type=number], input[type=range] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type=submit] {
+            margin-top: 25px;
+            width: 100%;
+            background-color: #00838f;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #006064;
+        }
+
+        .prediction {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #00796b;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if prediction is not defined %}
+            <h2>Predicción de Precio de Vuelo</h2>
+            <form action="/predict" method="post">
+                <!-- Aerolínea -->
+                <label for="airline">Aerolínea:</label>
+                <select name="airline" required>
+                    <option value="0">Vistara</option>
+                    <option value="1">Air_India</option>
+                    <option value="2">Indigo</option>
+                    <option value="3">GO_FIRST</option>
+                    <option value="4">AirAsia</option>
+                </select>
+
+                <!-- Ciudad de Origen -->
+                <label for="source_city">Ciudad Origen:</label>
+                <select name="source_city" required>
+                    <option value="0">Delhi</option>
+                    <option value="1">Mumbai</option>
+                    <option value="2">Bangalore</option>
+                    <option value="3">Kolkata</option>
+                    <option value="4">Hyderabad</option>
+                </select>
+
+                <!-- Ciudad Destino -->
+                <label for="destination_city">Ciudad Destino:</label>
+                <select name="destination_city" required>
+                    <option value="0">Delhi</option>
+                    <option value="1">Mumbai</option>
+                    <option value="2">Bangalore</option>
+                    <option value="3">Kolkata</option>
+                    <option value="4">Hyderabad</option>
+                </select>
+
+                <!-- Clase -->
+                <label for="class">Clase:</label>
+                <select name="class" required>
+                    <option value="0">Economy</option>
+                    <option value="1">Business</option>
+                </select>
+
+                <!-- Duración -->
+                <label for="duration">Duración del vuelo (horas): <span id="durationValue">0.83</span></label>
+                <input type="range" name="duration" min="0.83" max="49.8" step="0.01" value="0.83"
+                       oninput="document.getElementById('durationValue').innerText = this.value">
+
+                <input type="submit" value="Predecir Precio">
+            </form>
+        {% else %}
+            <h2>Resultado</h2>
+            <p class="prediction">El precio estimado del vuelo es: <strong>${{ prediction }}</strong></p>
+            <a href="/">Volver al formulario</a>
+        {% endif %}
+    </div>
+</body>
+</html>
