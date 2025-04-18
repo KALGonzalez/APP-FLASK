@@ -7,7 +7,7 @@ import numpy as np
 import joblib
 
 app = Flask(__name__)
-model = joblib.load('/workspace/APP-FLASK/models/model_30trees_15depth.pkl')
+model = joblib.load('/workspaces/APP-FLASK/models/model_30trees_15depth.pkl')
 
 
 @app.route('/')
